@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-markdown-text-tool = "markdown_text_tool:main"
+mdtt = "markdown_text_tool:main"
 
 [build-system]
 requires = ["hatchling"]
