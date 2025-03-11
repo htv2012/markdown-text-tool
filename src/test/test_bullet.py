@@ -6,8 +6,9 @@ from mdtt import bullet
 @pytest.mark.parametrize(
     ["text", "expected"],
     [
-        pytest.param("- bullet1\n- bullet2", ("- ", "  "), id="no indent"),
-        pytest.param("    - bullet", ("    - ", "      "), id="indent 4 columns"),
+        pytest.param("* bullet1\n* bullet2", ("* ", "  "), id="asterisk"),
+        pytest.param("- bullet1\n- bullet2", ("- ", "  "), id="dash"),
+        pytest.param("    - bullet", ("    - ", "      "), id="indent"),
     ],
 )
 def test_indentation(text, expected):
@@ -17,8 +18,9 @@ def test_indentation(text, expected):
 @pytest.mark.parametrize(
     ["input_file", "expected_file"],
     [
-        pytest.param("input2.md", "expected2.md", id="no indent"),
-        pytest.param("input1.md", "expected1.md", id="indent 4 columns"),
+        pytest.param("asterisk_input.md", "asterisk_output.md", id="asterisk"),
+        pytest.param("indent_input.md", "indent_output.md", id="indent"),
+        pytest.param("dash_input.md", "dash_output.md", id="dash"),
     ],
 )
 def test_format_bullet(request, input_file, expected_file):
