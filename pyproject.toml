@@ -1,7 +1,7 @@
 [project]
-name = "xyz"
+name = "mdtt"
 version = "0.1.0"
-description = "Add your description here"
+description = "A collection of tools to manipulate markdown text"
 readme = "README.md"
 authors = [
     { name = "Hai Vu", email = "haivu2004@gmail.com" }
@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-xyz = "xyz:main"
+mdtt = "mdtt:main"
 
 [build-system]
 requires = ["hatchling"]
