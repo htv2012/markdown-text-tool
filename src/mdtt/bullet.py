@@ -10,23 +10,35 @@ def get_indentation(text: str):
     return "- ", "  "
 
 
-def format(text: str, width=72):
-    initial_indent, subsequent_indent = get_indentation(text)
-    buf = io.StringIO()
-    separator = re.compile(r"^ *[*-] +", re.MULTILINE)
-    bullets = separator.split(text)
-    del bullets[0]  # Firt element is always ""
-    print(f"{initial_indent=}")
-    # breakpoint()
+def _collect(buffer: io.StringIO, seq: list, width: int, indent: str):
+    bullet = buffer.getvalue()
+    if not bullet:
+        return
 
-    for bullet in bullets:
-        bullet = textwrap.fill(
-            bullet,
+    seq.append(
+        textwrap.fill(
+            text=bullet,
             width=width,
-            initial_indent=initial_indent,
-            subsequent_indent=subsequent_indent,
+            subsequent_indent=indent,
         )
-        buf.write(bullet)
-        buf.write("\n")
+    )
+    buffer.seek(0)
+    buffer.truncate()
 
-    return buf.getvalue()
+
+def format(text: str, width=72):
+    bullets = []
+    collected = io.StringIO()
+    indent = ""
+
+    for line in text.splitlines():
+        trimmed = line.strip()
+        if trimmed.startswith(("- ", "* ")):
+            _collect(collected, bullets, width, indent)
+            _, indent = get_indentation(line)
+        collected.write(f"{line}\n")
+
+    # Is there any left over?
+    _collect(collected, bullets, width, indent)
+
+    return "\n".join(bullets)
