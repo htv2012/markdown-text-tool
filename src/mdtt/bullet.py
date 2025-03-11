@@ -15,7 +15,9 @@ def format(text: str, width=72):
     buf = io.StringIO()
     separator = re.compile(r"^ *[*-] +", re.MULTILINE)
     bullets = separator.split(text)
+    del bullets[0]  # Firt element is always ""
     print(f"{initial_indent=}")
+    # breakpoint()
 
     for bullet in bullets:
         bullet = textwrap.fill(
